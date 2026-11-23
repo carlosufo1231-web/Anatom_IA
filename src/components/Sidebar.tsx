@@ -6,6 +6,7 @@ interface SidebarProps {
   onChangeDepthLevel: (level: DepthLevel) => void;
   onGenerateQuiz: () => void;
   isGeneratingQuiz: boolean;
+  showQuizControls: boolean;
   isOpenMobile: boolean;
   onCloseMobile: () => void;
 }
@@ -15,6 +16,7 @@ export function Sidebar({
   onChangeDepthLevel,
   onGenerateQuiz,
   isGeneratingQuiz,
+  showQuizControls,
   isOpenMobile,
   onCloseMobile,
 }: SidebarProps) {
@@ -91,34 +93,37 @@ export function Sidebar({
           </section>
 
           {/* Gerar Quiz Rápido */}
-          <section aria-labelledby="quiz-heading">
-            <div className="flex items-center gap-2 mb-3">
-              <Zap className="h-4 w-4 text-[#76FF03] shrink-0" />
-              <h2
-                id="quiz-heading"
-                className="text-sm font-bold tracking-wide text-white"
-              >
-                Teste de Conhecimento
-              </h2>
-            </div>
+          {showQuizControls && (
+            <section aria-labelledby="quiz-heading">
+              <div className="flex items-center gap-2 mb-3">
+                <Zap className="h-4 w-4 text-[#76FF03] shrink-0" />
+                <h2
+                  id="quiz-heading"
+                  className="text-sm font-bold tracking-wide text-white"
+                >
+                  Teste de Conhecimento
+                </h2>
+              </div>
 
-            <button
-              type="button"
-              onClick={() => {
-                onGenerateQuiz();
-                onCloseMobile();
-              }}
-              disabled={isGeneratingQuiz}
-              className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#00E640] to-[#76FF03] px-4 py-3 text-sm font-bold text-[#040B14] shadow-[0_0_22px_rgba(0,230,64,0.3)] transition-all duration-150 hover:brightness-110 active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#76FF03]"
-            >
-              <span>
-                {isGeneratingQuiz ? "Gerando Quiz..." : "⚡ Gerar Quiz Rápido"}
-              </span>
-            </button>
-            <p className="mt-2 text-xs text-slate-400 leading-relaxed">
-              Cria uma questão de múltipla escolha sobre o assunto atual ou um tema clássico de anatomia.
-            </p>
-          </section>
+              <button
+                type="button"
+                onClick={() => {
+                  onGenerateQuiz();
+                  onCloseMobile();
+                }}
+                disabled={isGeneratingQuiz}
+                className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#00E640] to-[#76FF03] px-4 py-3 text-sm font-bold text-[#040B14] shadow-[0_0_22px_rgba(0,230,64,0.3)] transition-all duration-150 hover:brightness-110 active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#76FF03]"
+              >
+                <span>
+                  {isGeneratingQuiz ? "Gerando Quiz..." : "⚡ Gerar Quiz Rápido"}
+                </span>
+              </button>
+              <p className="mt-2 text-xs text-slate-400 leading-relaxed">
+                Cria uma questão de múltipla escolha sobre o assunto atual ou um
+                tema clássico de anatomia.
+              </p>
+            </section>
+          )}
         </div>
 
         {/* Aviso Ético discreto no rodapé do menu */}
@@ -127,6 +132,9 @@ export function Sidebar({
             <AlertCircle className="h-3.5 w-3.5 shrink-0 text-[#E53935] mt-0.5" />
             <span>
               Fins estritamente educacionais. Não realiza diagnósticos ou prescrições médicas.
+            </span>
+            <span>
+              Desevolvido por {"Carlos e Celimar"} @ {"2026"}
             </span>
           </div>
         </div>

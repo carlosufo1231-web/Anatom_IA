@@ -23,6 +23,7 @@ interface ChatAreaProps {
   depthLevel: DepthLevel;
   isStreaming: boolean;
   isGeneratingQuiz: boolean;
+  showQuizControls: boolean;
   onSendMessage: (text: string, attachments: StudyMaterial[]) => void;
   onSelectQuizOption: (quizId: string, optionIndex: number) => void;
   onGenerateQuiz: (topicOverride?: string) => void;
@@ -33,6 +34,7 @@ export function ChatArea({
   depthLevel,
   isStreaming,
   isGeneratingQuiz,
+  showQuizControls,
   onSendMessage,
   onSelectQuizOption,
   onGenerateQuiz,
@@ -189,6 +191,7 @@ export function ChatArea({
                         onSelectOption={onSelectQuizOption}
                         onGenerateAnother={(topic) => onGenerateQuiz(topic)}
                         isGeneratingQuiz={isGeneratingQuiz}
+                        showQuizControls={showQuizControls}
                       />
                     ) : msg.error ? (
                       <div

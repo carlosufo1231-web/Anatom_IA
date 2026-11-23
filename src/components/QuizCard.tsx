@@ -7,6 +7,7 @@ interface QuizCardProps {
   onSelectOption: (quizId: string, optionIndex: number) => void;
   onGenerateAnother: (topic: string) => void;
   isGeneratingQuiz: boolean;
+  showQuizControls: boolean;
 }
 
 const OPTION_LETTERS = ["A", "B", "C", "D"];
@@ -16,6 +17,7 @@ export function QuizCard({
   onSelectOption,
   onGenerateAnother,
   isGeneratingQuiz,
+  showQuizControls,
 }: QuizCardProps) {
   const hasAnswered =
     quiz.selectedOption !== undefined && quiz.selectedOption !== null;
@@ -129,17 +131,19 @@ export function QuizCard({
             </div>
           )}
 
-          <div className="pt-1 flex justify-end">
-            <button
-              type="button"
-              disabled={isGeneratingQuiz}
-              onClick={() => onGenerateAnother(quiz.topic)}
-              className="inline-flex items-center gap-2 rounded-lg border border-[#00E5FF]/50 bg-[#040B14] px-3.5 py-2 text-xs font-semibold text-[#00E5FF] hover:border-[#00E5FF] hover:bg-[#0088FF]/15 transition-colors cursor-pointer disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]"
-            >
-              <RefreshCw className="h-3.5 w-3.5" />
-              <span>Gerar outra pergunta</span>
-            </button>
-          </div>
+          {showQuizControls && (
+            <div className="pt-1 flex justify-end">
+              <button
+                type="button"
+                disabled={isGeneratingQuiz}
+                onClick={() => onGenerateAnother(quiz.topic)}
+                className="inline-flex items-center gap-2 rounded-lg border border-[#00E5FF]/50 bg-[#040B14] px-3.5 py-2 text-xs font-semibold text-[#00E5FF] hover:border-[#00E5FF] hover:bg-[#0088FF]/15 transition-colors cursor-pointer disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00E5FF]"
+              >
+                <RefreshCw className="h-3.5 w-3.5" />
+                <span>Gerar outra pergunta</span>
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>

@@ -10,6 +10,8 @@ import type {
   StudyMaterial,
 } from "./types/anatomy";
 
+const SHOW_QUIZ_CONTROLS = false;
+
 function createId(prefix: string): string {
   return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 }
@@ -289,6 +291,7 @@ export default function App() {
           onChangeDepthLevel={setDepthLevel}
           onGenerateQuiz={() => handleGenerateQuiz()}
           isGeneratingQuiz={isGeneratingQuiz}
+          showQuizControls={SHOW_QUIZ_CONTROLS}
           isOpenMobile={isSidebarOpenMobile}
           onCloseMobile={() => setIsSidebarOpenMobile(false)}
         />
@@ -298,6 +301,7 @@ export default function App() {
           depthLevel={depthLevel}
           isStreaming={isStreaming}
           isGeneratingQuiz={isGeneratingQuiz}
+          showQuizControls={SHOW_QUIZ_CONTROLS}
           onSendMessage={handleSendMessage}
           onSelectQuizOption={handleSelectQuizOption}
           onGenerateQuiz={handleGenerateQuiz}
