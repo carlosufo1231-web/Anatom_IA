@@ -13,7 +13,7 @@ dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const GEMINI_MODEL = "gemini-3.1-flash-lite";
+const GEMINI_MODEL = "gemini-3.5-flash-lite";
 
 type DepthLevel = "iniciante" | "estudante" | "revisao";
 
@@ -264,28 +264,23 @@ async function startServer() {
         latestUserContent?.parts.push({ text: knowledgeContext });
       }
 
-      let hasSentChunks = false;
-      await with503Retry(async () => {
-        if (hasSentChunks) {
-          throw new Error("Stream já iniciado.");
-        }
-        const stream = await ai.models.generateContentStream({
+      const stream = await with503Retry(() =>
+        ai.models.generateContentStream({
           model: GEMINI_MODEL,
           contents,
           config: {
             systemInstruction,
             thinkingConfig: { thinkingLevel: ThinkingLevel.MINIMAL },
           },
-        });
+        })
+      );
 
-        for await (const chunk of stream) {
-          if (clientClosed) break;
-          if (chunk.text) {
-            hasSentChunks = true;
-            sendEvent({ text: chunk.text });
-          }
+      for await (const chunk of stream) {
+        if (clientClosed) break;
+        if (chunk.text) {
+          sendEvent({ text: chunk.text });
         }
-      });
+      }
 
       sendEvent({ done: true });
       if (!res.writableEnded) {
